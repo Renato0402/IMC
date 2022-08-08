@@ -1,20 +1,66 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+import React, {useState} from 'react';
+import { StyleSheet, Text, SafeAreaView,TouchableHighlight,TextInput,View,Image } from 'react-native';
+import StatusBar from './components/StatusBar';
+import Peso from './components/Peso';
+import Altura from './components/Altura';
+import BtnCalcular from './components/btnCalcular';
+import Resultado from './components/resultado'
+import Tabela from './components/imcImg'
+
+
+export default function calcimc() {
+
+  const [peso,setPeso] = useState(0)
+  const [altura,setAltura] = useState(0)
+  const [resultado,setResultado] = useState(0)
+
+  const calcImc = () =>{
+      
+    if( peso == 0 || !peso){
+      alert("Informe o peso")
+      return
+    }
+    if( altura == 0 || !altura){
+      alert("Informe a altura")
+      return
+    }
+
+    const result = peso/altura**2
+
+    setResultado(result.toFixed(1))
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.corpo}>
+      <StatusBar/>
+
+      <View style={styles.bloco}>
+      <Text>Calculadora de IMC</Text>
+      </View>
+
+      <Peso peso={setPeso}/>
+
+      <Altura altura={setAltura}/>
+      
+      <BtnCalcular calc={calcImc}/>
+      
+      <Resultado res={resultado}/>
+      
+      <Tabela/>
+      
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    
+   corpo:{
+     padding:10
+   },
+
+    bloco:{
+      marginBottom:20
+    },
+   
+})
